@@ -14,7 +14,5 @@ class IndexController extends Controller
              $this->response->redirect('login');
          }
     }
-    public function tempAction(){
-        
-    }
+   
 }
