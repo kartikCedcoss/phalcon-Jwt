@@ -8,7 +8,12 @@ use Phalcon\Events\Manager as EventsManager;
 
 
 define('BASE_PATH', dirname(__DIR__));
+
 define('APP_PATH', BASE_PATH . '/app');
+
+ require BASE_PATH . '/vendor/autoload.php';
+  
+
 
 $container = new FactoryDefault();
 
@@ -17,6 +22,7 @@ include APP_PATH . '/config/services.php';
 include APP_PATH . '/config/loader.php';
 
 $loader = new Loader();
+
 $loader->registerNamespaces(
     [
         'App\Handler' => APP_PATH . '/handler/'

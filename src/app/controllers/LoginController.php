@@ -3,8 +3,8 @@
 
 use Phalcon\Mvc\Controller;
 
-use Phalcon\Security\JWT\Builder;
-use Phalcon\Security\JWT\Signer\Hmac;
+use Firebase\JWT\JWT;
+
 
 
 
@@ -20,41 +20,28 @@ class LoginController extends Controller
     }
     public function authAction()
     {
-       $signer  = new Hmac();
-        
+       
         $email = $this->request->getPost('email');
         $pass = $this->request->getPost('pass');
         $user =  Tb_users::findFirst(['conditions' => "email = '$email' AND password = '$pass'"]);
 
         if ($user) {
             
+            $key = "example_key";
+
+            $payload = array(
+                "iss" => "http://localhost:8080",
+                "aud" => "http://localhost:8080",
+                "iat" => 1356999524,
+                "nbf" => 1357000000,
+                "name"=>$user->name,
+                "role"=>$user->userrole, 
+            );
+            $jwt = JWT::encode($payload, $key, 'HS256');
             
-            $builder = new Builder($signer);
 
-            $now        = new DateTimeImmutable();
-
-            $issued     = $now->getTimestamp();
-            $notBefore  = $now->modify('-1 minute')->getTimestamp();
-            $expires    = $now->modify('+1 day')->getTimestamp();
-            $passphrase = 'QcMpZ&b&mo3TPsPk668J6QH8JA$&U&m2';
-
-            // Setup
-            $builder
-                ->setAudience('localhost:8080')  // aud
-                ->setContentType('application/json')        // cty - header
-                ->setExpirationTime($expires)               // exp 
-                ->setId('abcd123456789')                    // JTI id 
-                ->setIssuedAt($issued)                      // iat 
-                ->setIssuer('https://phalcon.io')           // iss 
-                ->setNotBefore($notBefore)                  // nbf
-                ->setSubject($user->userrole)   // sub
-                ->setPassphrase($passphrase)                // password 
-            ;
-
-            $tokenObject = $builder->getToken();
-            $token=$tokenObject->getToken();
             $this->session->set('username',$user->name);
-            $this->response->redirect("index?bearer=$token");
+            $this->response->redirect("index?bearer=$jwt");
             
              
 
@@ -62,7 +49,7 @@ class LoginController extends Controller
     }
     public function registerAction()
     { 
-        $signer  = new Hmac();
+     
         $user = new Tb_users();
         $user->assign([
             'name' => $this->request->getPost('name'),
@@ -74,32 +61,19 @@ class LoginController extends Controller
 
         $success = $user->save();
         if ($success) {
-            $builder = new Builder($signer);
+            $key = "example_key";
 
-            $now        = new DateTimeImmutable();
-
-            $issued     = $now->getTimestamp();
-            $notBefore  = $now->modify('-1 minute')->getTimestamp();
-            $expires    = $now->modify('+1 day')->getTimestamp();
-            $passphrase = 'QcMpZ&b&mo3TPsPk668J6QH8JA$&U&m2';
-
-            // Setup
-            $builder
-                ->setAudience('localhost:8080')  // aud
-                ->setContentType('application/json')        // cty - header
-                ->setExpirationTime($expires)               // exp 
-                ->setId('abcd123456789')                    // JTI id 
-                ->setIssuedAt($issued)                      // iat 
-                ->setIssuer('https://phalcon.io')           // iss 
-                ->setNotBefore($notBefore)                  // nbf
-                ->setSubject($user->userrole)   // sub
-                ->setPassphrase($passphrase)                // password 
-            ;
-
-            $tokenObject = $builder->getToken();
-            $token=$tokenObject->getToken();
+            $payload = array(
+                "iss" => "http://localhost:8080",
+                "aud" => "http://localhost:8080",
+                "iat" => 1356999524,
+                "nbf" => 1357000000,
+                "name"=>$user->name,
+                "role"=>$user->userrole, 
+            );
+            $jwt = JWT::encode($payload, $key, 'HS256');
             $this->session->set('username',$user->name);
-            $this->response->redirect("index?bearer=$token");
+            $this->response->redirect("index?bearer=$jwt");
             
         }
     }

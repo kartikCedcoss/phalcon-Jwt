@@ -12,6 +12,7 @@ class AddproductController extends Controller
     
     }
     public function addAction(){
+        $bearer=$this->request->get('bearer');
         $products= new Products();
         $eventsManager = new EventsManager();
         $component = new \App\Handler\Aware();
@@ -34,7 +35,7 @@ class AddproductController extends Controller
             );
 
           $component->process1();
-          $this->response->redirect('../index');
+          $this->response->redirect("../index?bearer=$bearer");
         }
          
 

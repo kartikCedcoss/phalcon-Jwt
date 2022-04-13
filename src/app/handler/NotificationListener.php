@@ -3,9 +3,9 @@ namespace App\Handler;
 
 use Phalcon\Mvc\Dispatcher;
 use Phalcon\Events\Event;
-use Phalcon\Security\JWT\Token\Parser;
-use Phalcon\Security\JWT\Validator;
 
+use Firebase\JWT\JWT;
+use Firebase\JWT\Key;
 
 class NotificationListener{
  
@@ -19,19 +19,13 @@ class NotificationListener{
                 file_get_contents($aclFile) 
             );
             
-           $bearer = $application->request->get('bearer');
-           if($bearer){
+           $jwt = $application->request->get('bearer');
+           if($jwt){
                try{
-                   $parser = new Parser();
-                   $tokenObject = $parser->parse($bearer);
-                   $now = new \DateTimeImmutable();
-                   $expires = $now->getTimestamp();
-                   $validator = new Validator($tokenObject,100);
-                   $validator->validateExpiration($expires);
+                $key = "example_key";
+                $decoded = JWT::decode($jwt, new Key($key, 'HS256'));
 
-
-                   $claims = $tokenObject->getClaims()->getPayload();
-                   $role=$claims['sub'];
+                $role = $decoded->role;
                    
                  }
                 catch(\Exception $e){

@@ -7,6 +7,7 @@ $loader->registerDirs(
     [
         APP_PATH . '/controllers/',
         APP_PATH . '/models/',
+        BASE_PATH.'/vendor/',
       
        
     ]
