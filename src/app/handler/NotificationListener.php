@@ -56,7 +56,7 @@ class NotificationListener{
         }
         else{
                echo "can't find any acl file";
-              die; 
+             die;
         }
         
        
