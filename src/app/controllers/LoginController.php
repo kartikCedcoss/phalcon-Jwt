@@ -42,19 +42,17 @@ class LoginController extends Controller
 
             $this->session->set('username',$user->name);
             $this->response->redirect("index?bearer=$jwt");
-            
-             
-
         }
     }
     public function registerAction()
     { 
-     
-        $user = new Tb_users();
-        $user->assign([
-            'name' => $this->request->getPost('name'),
+         $name = $this->request->getPost('name');
+         $role = $this->request->getPost('role');
+         $user = new Tb_users();
+         $user->assign([
+            'name' => $name,
             'email' => $this->request->getPost('email'),
-            'userrole' => $this->request->getPost('role'),
+            'userrole' => $role,
             'password' => $this->request->getPost('password')
 
         ]);
@@ -72,7 +70,7 @@ class LoginController extends Controller
                 "role"=>$user->userrole, 
             );
             $jwt = JWT::encode($payload, $key, 'HS256');
-            $this->session->set('username',$user->name);
+            $this->session->set('username',$name);
             $this->response->redirect("index?bearer=$jwt");
             
         }
