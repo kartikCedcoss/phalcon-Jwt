@@ -29,11 +29,12 @@ $loader->register();
 
 $application=new Application($container);
 $eventsManager=new EventsManager();
+
 $eventsManager->attach(
     'application:beforeHandleRequest',
     new App\Handler\NotificationListener()
 );
-
+require  BASE_PATH . '/vendor/autoload.php';
 $container->set(
     'EventsManager',
     $eventsManager
