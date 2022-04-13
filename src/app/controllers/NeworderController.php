@@ -11,8 +11,10 @@ class NeworderController extends Controller
     
     }
     public function placenewAction(){
+       
         $orders= new Orders();
-        
+        $bearer= $this->request->get('bearer');
+       
         $eventsManager = new EventsManager();
         $component = new \App\Handler\Aware();
         $component->setEventsManager($eventsManager);
@@ -33,7 +35,7 @@ class NeworderController extends Controller
                  );
      
                $component->process2();
-                $this->response->redirect('../index');
+                $this->response->redirect("../index?bearer=$bearer");
          }
        
     }

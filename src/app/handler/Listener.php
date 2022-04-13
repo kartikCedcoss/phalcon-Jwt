@@ -26,7 +26,7 @@ class Listener{
     }
     public function ordersave(){
         $settings = Settings::findFirstBysid(1);
-        $order = Orders::findFirst(['order'=>'order_id']);
+        $order = Orders::findFirst(['order'=>'order_id DESC']);
         if($order->zipcode == 0){
             $order->zipcode = $settings->default_zip;
         }
