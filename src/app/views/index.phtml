@@ -7,9 +7,24 @@
     <title>Document</title>
     <link rel="shortcut icon" type="image/x-icon" href="<?php echo $this->url->get('img/favicon.ico')?>"/>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-
 </head>
 <body>
+    <div class="container"><form method="POST" action="" ><tr><td><label>Select Language</label></td> <td> 
+                <select name="locale"  onchange='this.form.submit()'>
+                <option value="" name='tags'><?php if(!$this->session->has('lang')){
+                  echo "en";
+                }
+                $language= $this->session->get('lang');
+                echo $language;?></option>
+                <option value="en" name='tags'>English</option>
+                <option value="hi" name='tags'>Hindi</option>
+                <option value="fr" name='tags'>French</option>
+                
+               </select>
+                  </td></tr>
+                 
+                </form></div>
+
    <div class="container">
    <?php echo $this->getContent(); ?>
    </div>

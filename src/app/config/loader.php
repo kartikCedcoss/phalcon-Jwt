@@ -18,5 +18,11 @@ $loader->registerNamespaces(
         
     ]
 );
+$loader->registerNamespaces(
+    [
+        'App\Component' => APP_PATH . '/component/'
+        
+    ]
+);
 
 $loader->register();

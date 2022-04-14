@@ -23,6 +23,7 @@ class LoginController extends Controller
        
         $email = $this->request->getPost('email');
         $pass = $this->request->getPost('pass');
+        
         $user =  Tb_users::findFirst(['conditions' => "email = '$email' AND password = '$pass'"]);
 
         if ($user) {
@@ -42,6 +43,10 @@ class LoginController extends Controller
 
             $this->session->set('username',$user->name);
             $this->response->redirect("index?bearer=$jwt");
+        }
+        else{
+            
+            $this->view->user = $email;
         }
     }
     public function registerAction()

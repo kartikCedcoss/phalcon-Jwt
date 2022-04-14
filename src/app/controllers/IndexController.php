@@ -13,6 +13,7 @@ class IndexController extends Controller
          if(!$this->session->has('username')){
              $this->response->redirect('login');
          }
+         $this->view->user = $this->session->get('username');
     }
    
 }

@@ -12,7 +12,10 @@ use Phalcon\Session\Manager as SessionManager;
 
 
 
-
+$container->set('locale', function(){
+    return (new \App\Component\Locale())->getTranslator();
+ }
+ );
 
 $container->setShared('session', function () {
     $session = new SessionManager();

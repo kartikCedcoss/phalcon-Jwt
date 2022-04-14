@@ -29,7 +29,10 @@
     </p>
     
     <p>
-        <?php echo $this->tag->submitButton("Register"); ?>
+    <button type="submit" class="btn btn-primary btn-lg"  name="userlogin"><?php 
+                  echo  $this->locale->_('register');
+                 ?></button>
+       
         <?php echo $this->tag->linkTo(
     'login',
     'Login Here!'
