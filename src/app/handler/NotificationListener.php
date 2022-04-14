@@ -3,9 +3,10 @@ namespace App\Handler;
 
 use Phalcon\Mvc\Dispatcher;
 use Phalcon\Events\Event;
-
+use App\Component\Locale;
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
+
 
 class NotificationListener{
  
@@ -39,7 +40,9 @@ class NotificationListener{
                 $action="index";
             }
             if( !$role || true !== $acl->isAllowed($role,$controller,$action)){
-                echo "Access Denied ";
+                $locale = new Locale();
+                $p =$locale->getTranslator();
+                echo $p->_('access denied');
                 die;
             }
         }else{

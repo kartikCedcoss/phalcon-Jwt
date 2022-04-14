@@ -1,5 +1,5 @@
 
-<h2>Add New Product</h2>
+<h2><?php  echo  $this->locale->_('add product'); ?></h2>
 
 <?php echo $this->tag->form("addproduct/add"); ?>
     <p>
@@ -24,7 +24,8 @@
         <?php echo $this->tag->textField("stock"); ?>
     </p>
     <p>
-        <?php echo $this->tag->submitButton("Add"); ?>
+    <button class="btn btn-danger" type="submit" ><?php echo  $this->locale->_('add'); ?></button>
+       
     </p>
 
 </form>

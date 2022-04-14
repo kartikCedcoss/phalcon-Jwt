@@ -15,5 +15,7 @@ $messages = [
      'settings'=>'Settings',
      'component'=>'Component',
      'register' => 'Register',
+     'add'=>'Add',
+     'access denied'=> 'Access denied',
 
 ];
